@@ -52,7 +52,7 @@
 							<div class='col-md-9'>
 								<ul>
 									<li>Senior Software Engineer<br />Lead of Warsaw Team - SMACC</li>
-									<li>Before: System Engineer Lyke</li>
+									<li>Before:<br />System Engineer Lyke</li>
 									<li>Before:<br />1000+ nodes, 20 data centers with Openstack</li>
 									<!-- li>System Engineer background</li>
 									<li>Interests:<br />working software</li>
@@ -69,11 +69,12 @@
 				<section>
 					<h3>Background</h3><!-- Dude, why should I listen to you? -->
 						<ul>
-							<li>A top AI FinTech ➡ micro-services and k8s</li>
-							<li>Before renew tech stack<br />of a top Indonesian mobile e-commerce</li>
+							<li>10+ Developer and R&amp;D</li>
+							<li>E-commerce, Artifical Intelligence, Data Centers</li>
+							<li>1.5y with Kubernetes, 3+ AWS, 1+ GCE<br />0+ ProfitBricks</li>
 							<li>3.5y with Openstack, 1000+ nodes, 21 data centers</li>
-							<li>I do not like INFRA :D</li>
-							<li>I do not like: puppet, chef, ansible...</li>
+							<li>I do not like INFRA</li>
+							<li>I do not like: puppet, chef, ansible,...</li>
 						</ul>
 				</section>
 
@@ -87,7 +88,6 @@
 							<li>SMACC - [10.2017 - present]</li>
 						</ul>
 				</section>
-					
 
 				<!-- 
 				Tell me a story
@@ -179,6 +179,7 @@
 									<li>Batteries for your 12factor apps</li>
 									<li>Meta-data support</li>
 									<li>Service discovery</li>
+									<li>Cloud-Provider independent, we can always move</li>
 								</ul>
 							</div>
 							<div class='col-md-3'>
@@ -300,16 +301,17 @@
 
 				<p>We used:</p>
 				<ul>
-					<li>basic rolling releases per component</li>
+					<li>Basic Rolling Releases per Component (focus on simplicity)</li>
 					<li>A/B switches in Mobile App with Google Firebase</li>
-				</ul>
+				</ul><br />
 				<small>BlueGreen Deployment - ingress controller</small>
 				<!-- before rocker bucket: https://github.com/rocket-internet-berlin/RocketBucket -->
 			</section>
 
 			<section>
-				<h4>Rolling Release with Deployments<h2>
-				<img src="img/k8s_rolling_out_updates.svg" style="width:80%">
+				<h4>Rolling Release with Deployments</h4>
+				<img src="img/k8s_rolling_out_updates.svg" style="width:80%"><br />
+				<small>Also possible</small>
 			</section>
 
 			<section data-markdown>
@@ -323,10 +325,36 @@
 				- smoke tests
 				- ...
 				- Devs can foget about infrastructure... almost
+				- Happy developers! ☺
 
-<small>DevOps Dream!</small>
+<small>DevOps Culture Dream!</small>
 			</script>
 			</section>
+
+				<section>
+<h3>Ingress Rule per Component</h3>
+	
+<small><code>cat tools/ingress-production.yaml</code></small>
+<pre><code class="yaml" data-trim="" width="100%">
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: api-status
+  namespace: production
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: api.example.com
+    http:
+      paths:
+        - path: /status
+          backend:
+            serviceName: api-status
+            servicePort: 80
+</code></pre>
+				</section>
 
 				<section>
 					<h3>Integration with Prometheus</h3>
@@ -357,31 +385,6 @@ spec:
     role: shard-0
 </code></pre>
 <small>https://github.com/skarab7/kubernetes-memcached</small>
-				</section>
-
-				<section>
-<h3>Ingress Rule</h3>
-	
-<small><code>cat tools/ingress-production.yaml</code></small>
-<pre><code class="yaml" data-trim="" width="100%">
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: api-status
-  namespace: production
-  annotations:
-    kubernetes.io/ingress.class: traefik
-spec:
-  rules:
-  - host: api.example.com
-    http:
-      paths:
-        - path: /status
-          backend:
-            serviceName: api-status
-            servicePort: 80
-</code></pre>
 				</section>
 
 				<section>
@@ -419,6 +422,15 @@ receivers:
 <small>AlertManager</small>
 </section>
 
+
+<section data-markdown>
+			<script type="text/template">
+### Simplify
+
+- Google Identity-Aware-Proxy to protect all dashboards
+</script>
+</section>
+	
 			<section data-markdown>
 				<script type="text/template">
 				### Infra repo
@@ -507,7 +519,7 @@ receivers:
 					- Load-Balancer and Health-checks
 					- Persistent volumes
 					- Graphic-card support added
-					- Service accounts for CD and CI
+					- Sane Service accounts for CD and CI
 				</script>
 			</section>
 
@@ -525,9 +537,9 @@ receivers:
 			</section>
 
 			<section>
-				<h6>Immediately Architecture</h6>
-				<img src="img/lyke_immediately_architecture.svg" width="80%">
-				<small>No dev?</small>
+				<h8>Immediately Architecture</h8>
+				<img src="img/lyke_immediately_architecture.svg" width="85%"><!-- br /-->
+				<!-- small>No dev?</small -->
 			</section>
 
 			<section>
@@ -597,12 +609,14 @@ The most crucial point.
 					<script type="text/template">
 ### 5. Continuous Deployment
 
-Simple components:
+Travis:
 
 - test code, build docker, push to docker repo
-- run the rolling update:<br />
+- only run the rolling update:<br />
 <code>kubectl set image deployment/api-status nginx=nginx:1.9.1</code>
-- Use TravisCI
+- did not create any kubernetes artificats [*]
+
+[*]
 					</script>
 				</section>
 				
@@ -730,7 +744,6 @@ To offload the biggest components:
 					- Strong AI and Data Science Team
 					- Deep know how on accounting and finance processes
 					- a lot of tested code, strong engineering
-
 <img src="img/smacc_brain.png" />
 					</script>
 				</section>
@@ -739,6 +752,7 @@ To offload the biggest components:
 					<script type="text/template">
 					### Challenge
 
+					- weak System Engineering
 					- Initial experiment with ECS, not amazing
 					- Few monolith oversized components
 					- Business Pressure on choosing a EU cloud provider
@@ -746,7 +760,7 @@ To offload the biggest components:
 					</script>
 				</section>
 
-				<section data-markdown>
+				<!-- section data-markdown>
 					<script type="text/template">
 					### Choice: ProfitBricks
 
@@ -754,16 +768,16 @@ To offload the biggest components:
 					- Basic Load Balancing (layer 3) [X]
 					- DE [X]
 					</script>
-				</section>
+				</section -->
 
-				<section data-markdown>
+				<!-- section data-markdown>
 					<script type="text/template">
 					### Intermiediate state
 
 					- VPN between AWS and ProfitBricks
 					- smooth the transition period
 				</script>
-				</section>
+				</section -->
 
 				<section data-markdown>
 					<script type="text/template">
@@ -775,23 +789,47 @@ To offload the biggest components:
 					- Databases as separate nodes
 					</script>
 				</section>
-				
+
 				<section data-markdown>
+					<script type="text/template">
+					### ProfitBricks
+
+					- Terraform provider [X]
+					- Basic Load Balancing (layer 3) [X]
+					- DE [X]
+					- We cam eaily move to Amazon EKS, Google CE, or Azure Kubernetes if needed
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+					### Next steps
+
+					- missy - an auto-wiring microservice framework
+					- Evaluating new: <a>linkerd.io</a>, <a>istio.io</a>
+					- Building new services around the core product
+					</script>
+				</section>
+
+
+				<!-- section data-markdown>
 					<script type="text/template">
 					### Fun part
 
 					- 1 Person, 2 weeks: k8s + auth + CD
-					- Developers can just focus on their applications
+					- developers can just focus on their applications
 					- We might move to Amazon EKS, Google CE, or Azure Kubernetes if needed
 					- Hard part: quotas, CPU and Memory limits...
 					</script>
-				</section>
+				</section -->
 
 				<section>
 					<h3>Summary</h3>
 					<ul>
+						<li>Zmiany: Single point of entry, README.rst</li>
 						<li>Kubernetes is the new Linux!</li>
 						<li>Less important your cloud provider</li>
+						<li>RAFT... CAP... in the end it is about people</li>
 					</ul>
 				</section>
 
