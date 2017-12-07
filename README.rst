@@ -33,3 +33,13 @@ Demo Part
   # kill the tainted pod and create new one:
   kubectl delete po api-status-nginx-56c47986cf-lhzqp
 
+
+Generate PDF
+============
+
+::
+
+  # you need to have docker installed
+  make give_me_pdf
+
+
