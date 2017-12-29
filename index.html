@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="css/theme/white.css">
 
 		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<!-- link rel="stylesheet" href="lib/css/zenburn.css" -->
 		
 		
 		<!-- Printing and PDF exports -->
@@ -332,11 +332,9 @@
 			</section>
 
 				<section>
-<h3>Ingress Rule per Component</h3>
+<h5>Ingress Rule per Component</h5>
 	
-<small><code>cat tools/ingress-production.yaml</code></small>
-<pre><code class="yaml" data-trim="" width="100%">
----
+<small><code>cat tools/ingress-production.yaml</code></small><pre><code class="yaml" data-trim="" width="100%">---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -352,15 +350,12 @@ spec:
         - path: /status
           backend:
             serviceName: api-status
-            servicePort: 80
-</code></pre>
+            servicePort: 80</code></pre>
 				</section>
 
 				<section>
-					<h3>Integration with Prometheus</h3>
-<small><code>cat memcached-0-service.yaml</code></small>
-<pre><code class="yaml" data-trim="" width="100%">
----
+					<h5>Integration with Prometheus</h5>
+<small><code>cat memcached-0-service.yaml</code></small><pre><code class="yaml" data-trim="" width="100%">---
 apiVersion: v1
 kind: Service
 metadata:
@@ -369,7 +364,6 @@ metadata:
     app: memcached
     kubernetes.io/name: "memcached"
     role: shard-0
-    tier: backend
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/scheme: "http"
@@ -382,30 +376,25 @@ spec:
       targetPort: 11211
   selector:
     app: memcached
-    role: shard-0
-</code></pre>
-<small>https://github.com/skarab7/kubernetes-memcached</small>
+    role: shard-0</code></pre><small>https://github.com/skarab7/kubernetes-memcached</small>
 				</section>
 
 				<section>
-					<h3>Use Labels in Alert Rules</h3>
-<pre><code>
-ALERT ProductionAppServiceInstanceDown
+					<h5>Use Labels in Alert Rules</h5>
+<pre><code>ALERT ProductionAppServiceInstanceDown
    IF up { environment = "production", app =~ ".+"} == 0
    FOR 4m 
    ANNOTATIONS {
         summary = "Instance of {{$labels.app}} is down",
         description = " Instance  {{$labels.instance}} of app {{$labels.app}} has been down for more than 4 minutes"
-   }
-</code></pre>
+   }</code></pre>
 <p>AlertManager</p>
 				</section>
 
 				<section>
-					<h3>Use Labels in Alert Routing</h3>	
+					<h5>Use Labels in Alert Routing</h5>
 <small>Call somebody if the label is <code>severity=page</code>:</small>
-<pre><code>
----
+<pre><code>---
  group_by: [cluster]
  # If an alert isn't caught by a route, send it to the pager.
  receiver: team-pager
