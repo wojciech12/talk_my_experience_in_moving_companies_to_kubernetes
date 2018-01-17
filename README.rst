@@ -1,8 +1,15 @@
 Transformacja platformy e-commerce z instancji na AWS-ie do Kubernetes-a z Google Cloud Platform
 ================================================================================================
 
-- it is a reveals.js presentation
+Interested in Kubernetes? Do you think how to get more independent from your cloud provider?
+
+Kubernetes lets you to decouple your software from a cloud provider we are using. It becomes much easier to migrate your application from one provider to another. In my case, it was AWS to GCP. Still, having k8s, I can migrate back to the market leader (as in 2017) if needed.
+
+Presentation
+============
+
 - you can also check the pdf export - index.pdf
+- a reveals.js presentation, clone/download the repo, and open with your browser
 
 Demo Part
 =========
